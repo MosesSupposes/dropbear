@@ -13,6 +13,11 @@ const tokenize = (input) => {
   while (cursor < input.length) {
     let character = input[cursor];
 
+    if (isWhitespace(character)) {
+      cursor++;
+      continue;
+    }
+
     if (isParenthesis(character)) {
       tokens.push({
         type: 'Parenthesis',
@@ -22,25 +27,46 @@ const tokenize = (input) => {
       continue;
     }
 
-    if (isWhitespace(character)) {
-      cursor++;
-      continue;
-    }
-
     if (isNumber(character)) {
+      let number = character;
+
+      while (isNumber(input[++cursor])) {
+        number += input[cursor];
+      }
+
       tokens.push({
         type: 'Number',
-        value: parseInt(character),
+        value: parseInt(number),
       });
 
-      cursor++;
       continue;
     }
 
     if (isLetter(character)) {
+      let fullWord = character;
+
+      while (isLetter(input[++cursor])) {
+        fullWord += input[cursor];
+      }
+
       tokens.push({
         type: 'Name',
-        value: character,
+        value: fullWord,
+      });
+
+      continue;
+    }
+
+    if (isQuote(character)) {
+      let string = '';
+
+      while (!isQuote(input[++cursor])) {
+        string += input[cursor];
+      }
+
+      tokens.push({
+        type: 'String',
+        value: string,
       });
 
       cursor++;
