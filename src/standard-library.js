@@ -1,4 +1,4 @@
-const all = fn => (...list) => list.reduce(fn);
+const all = (fn) => (...list) => list.reduce(fn);
 
 const add = all((a, b) => a + b);
 const subtract = all((a, b) => a - b);
@@ -15,6 +15,8 @@ const environment = {
   modulo,
   log,
   pi: Math.PI,
+  max: Math.max,
+  // max: (...xs) => xs.reduce((acc, cur) => (acc > cur ? acc : cur)),
 };
 
 module.exports = { environment };
