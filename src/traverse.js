@@ -1,18 +1,16 @@
 const traverseNode = ({ node, parent, visitor }) => {
-  if (visitor[node.type]) {
-    const methods = visitor[node.type];
+  const methods = visitor[node.type];
 
-    if (methods && methods.enter) {
-      methods.enter({ node, parent });
-    }
+  if (methods && methods.enter) {
+    methods.enter({ node, parent });
+  }
 
-    if (node.arguments) {
-      traverseArray({ array: node.arguments, parent: node, visitor });
-    }
+  if (node.arguments) {
+    traverseArray({ array: node.arguments, parent: node, visitor });
+  }
 
-    if (methods && methods.exit) {
-      methods.exit({ node, parent });
-    }
+  if (methods && methods.exit) {
+    methods.exit({ node, parent });
   }
 };
 
